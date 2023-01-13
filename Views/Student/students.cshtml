@@ -1,0 +1,121 @@
+﻿@model IEnumerable<app_grades.Models.Student>
+@{
+	ViewData["Title"] = "students";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Liste des étudiants </h2>
+<hr />
+<div class="row">
+	<div class="col"></div>
+	<div class="col-md-3">
+		<a asp-controller="Student" asp-action="AddOrEdit" class="btn btn-danger btn-lg"> <i class="fa-solid fa-plus"></i> Ajouter étudiant </a>
+	</div>
+
+</div>
+
+
+<p></p>
+<div>
+	<form method="get" asp-action="Filter">
+
+
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<input type="search" class="form-control" placeholder=" Chercher par Nom, Prenom ,Cin ..." value="@ViewData["search"]" name="searchString" style="width:500px" />
+			</div>
+			<button type="submit" class="btn btn-outline-danger waves-effect"> <i class="fa-solid fa-magnifying-glass"></i> Chercher</button>
+		</div>
+
+	</form>
+
+
+
+
+</div>
+
+<br />
+
+@{
+	if (ViewBag.ERROR != "")
+	{
+
+
+		<div class="alert alert-warning alert-dismissable mt-5" role="alert">
+			<strong>@ViewBag.ERROR</strong>
+
+		</div>
+
+
+	}
+	else
+	{
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				<div class="col-md-4 col-xs-6 border-primary mb-3">
+					<div class="card mb-3" style="max-width: 540px;">
+						<div class="row g-0">
+							<div class="col-md-12">
+								<div class="card-header text-white bg-primary" style="display:flex;justify-content:space-between;">
+									<p class="card-text">
+										<h5 class="card-title">
+											@item.FirstName
+
+											@item.LastName
+
+										</h5>
+									</p>
+
+									<a asp-action="AddOrEdit" asp-route-id="@item.StudentId" class="text-white float-right"><i class="bi bi-pencil-square"></i></a>
+								</div>
+							</div>
+							<div class="col-md-6">
+								@if (@item.Photo != null)
+								{
+									<img src="/images/student/@item.Photo" width="200" height="200" alt="@item.FirstName">
+								}
+								else
+								{
+									<img src="/images/placeholder.jpg" width="200" height="200" alt="@item.FirstName">
+								}
+							</div>
+							<div class="col-md-6">
+								<div class="card-body">
+
+									<p class="card-text"><b>Prénom: </b>@item.FirstName</p>
+									<p class="card-text"><b>Nom </b>@item.LastName</p>
+									<p class="card-text"><b>CIN: </b>@item.Cin</p>
+
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="card-footer ">
+									<p class="card-text">
+										<div class="row">
+											<div class="col">
+												<a class="btn btn-outline-primary float-right" href="/student/detail/@item.StudentId"><i class="bi bi-eye-fill fa-xl"></i> Voir Détails </a>
+
+											</div>
+											<div class="col">
+
+
+
+												<a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.StudentId" onclick="return confirm('Etes vous sure de vouloir supprimer cet étudiant ?')">
+													<i class="bi bi-trash fa-xl"></i> Supprimer
+												</a>
+
+											</div>
+
+
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	}
+}

@@ -1,0 +1,117 @@
+﻿@model Dictionary<Student,double> 
+@{
+
+    ViewData["Title"] = "studentsByaverage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> Liste des moyennes </h2>
+<hr />
+
+<br />
+<div class="mb-4">
+	<form method="get" asp-action="Averages">
+
+
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+
+				<select asp-items="ViewBag.filieres" value="@ViewData["searchFiliere"]" class="form-control" name="filiere" style="width:250px">
+					<option value="none">Chercher par filière ...</option>
+
+				</select>
+
+			</div>
+			<div class="input-group-prepend">
+
+				<select asp-items="ViewBag.levels" value="@ViewData["searchLevel"]" class="form-control" name="level" style="width:250px">
+					<option value="none">Chercher par niveau...</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-outline-primary waves-effect btn-lg"> <i class="fa-solid fa-magnifying-glass"></i> Chercher</button>
+		</div>
+
+	</form>
+
+
+
+
+</div>
+
+<p></p>
+
+
+@{
+	if (ViewBag.ERROR != "")
+	{
+
+
+		<div class="alert alert-warning alert-dismissable mt-5" role="alert">
+			<strong>@ViewBag.ERROR</strong>
+
+		</div>
+
+
+	}
+	else
+	{
+		<div class="card mt-3">
+			<div class="card-header text-white bg-primary">
+				<div class="row">
+
+					<div class="col">
+						<p> <b> Filiere: </b> @ViewBag.filiere</p>
+						<p> <b> Niveau : </b> @ViewBag.level </p>
+
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+			<div class="card-body">
+
+
+
+				<table class="table" style="font-size: medium;">
+					<thead style="background-color:gainsboro">
+
+						<tr>
+							<th scope="col">Cin </th>
+							<th scope="col">Nom</th>
+							<th scope="col">Prénom</th>
+							<th scope="col"> Moyenne </th>
+							<th scope="col"> Action</th>
+						</tr>
+					</thead>
+
+
+					<tbody>
+						@{
+							foreach (var item in Model)
+							{
+								<tr>
+									<td>@item.Key.Cin</td>
+									<td>@item.Key.LastName</td>
+									<td>@item.Key.FirstName</td>
+									<td>@Math.Round(@item.Value,2)</td>
+									<td>
+									<a class="btn btn-outline-danger " href="/student/grades/@item.Key.StudentId"><i class="bi bi-eye-fill fa-xl"></i> Consulter les notes </a>
+									</td>
+								
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	}
+}
+
+
+

@@ -1,0 +1,77 @@
+﻿@model app_grades.Models.Student
+@{
+    ViewData["Title"] = "detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Détails étudiant</h2>
+<hr />
+
+
+<p></p>
+<div class="row">
+    <div class="col-md-8 offset-2">
+      <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-primary" style="display:flex;justify-content:space-between;" >
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.FirstName
+                                @Model.LastName
+                            </h5>
+                        </p>
+                         <a class="text-white float-right"  asp-action="AddOrEdit" asp-route-id="@Model.StudentId"><i class="bi bi-pencil-square"></i></a>
+                    
+                     </div>
+                </div>
+                <div class="col-md-4">
+                    @if(@Model.Photo != null)
+                        {
+                            <img src="/images/student/@Model.Photo" width="200" height="200" alt="@Model.FirstName" style="margin-left:1cm; margin-top:2cm">
+                        }
+                        else
+                        {
+                            <img src="/images/placeholder.jpg" width="200" height="200" alt="@Model.FirstName" style="margin-left:1cm; margin-top:2cm">
+                        }
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                         <p class="card-text"><b>ID de l'étudiant: </b>@Model.StudentId</p>
+                        <p class="card-text"><b>Prénom: </b>@Model.FirstName</p>
+                        <p class="card-text"><b>Nom: </b>@Model.LastName</p>
+                        <p class="card-text"><b>CIN: </b>@Model.Cin</p>
+                        <p class="card-text"><b>Email: </b>@Model.Email</p>
+                        <p class="card-text"><b>Tel: </b>@Model.Phone</p>              
+                        <p class="card-text"><b>Filière: </b>@Model.Filiere</p>
+                         <p class="card-text"><b>Niveau: </b>@Model.Level</p>
+                   
+                        <p class="card-text"><b>Date de Naissance: </b>@Model.DateBirth.ToString("dd/MM/yyyy")</p>
+                        <div class="card-footer">
+                            
+                                <a class="btn btn-outline-danger " href="/student/grades/@Model.StudentId">
+                                    <i class="bi bi-eye-fill fa-xl"></i> Consulter les notes
+                                </a>
+                                 <a class="btn btn-danger text-white " asp-action="Delete" asp-route-id="@Model.StudentId" onclick="return confirm('Etes vous sure de vouloir supprimer cet étudiant ?')"><i class="bi bi-trash fa-xl"></i> Supprimer</a>
+                           
+                   
+                        </div>
+                     
+           
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="all">
+                                Retour a la liste des etudiants
+                            </a>
+                           
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

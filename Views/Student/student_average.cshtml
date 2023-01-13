@@ -1,0 +1,45 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "student_average";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Calcul de la moyenne : </h2>
+<hr />
+
+
+<div class="card mt-3 ">
+	<div class="card-header text-white bg-primary">
+		<div class="row">
+			<div class="col">
+				<p> <b> Nom et prénom : </b> @Model.FirstName @Model.LastName </p>
+				<p> <b> Cin : </b> @Model.Cin</p>
+			</div>
+			<div class="col">
+				<p> <b> Filiere: </b> @Model.Filiere</p>
+				<p> <b> Niveau : </b> @Model.Level </p>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="card-body">
+
+		<p> <b> Moyenne: </b>@Math.Round(ViewBag.Average,2)</p>
+			
+	</div>
+
+	<div class="card-footer">
+		<a class="btn btn-outline-danger " style="margin-left:1100px;" href="/student/grades/@Model.StudentId">
+			Retour à la liste des notes
+		</a>
+
+   </div>
+</div>
+
+
+ 
+

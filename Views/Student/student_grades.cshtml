@@ -1,0 +1,70 @@
+﻿@model IEnumerable<app_grades.Models.Grade>
+@{
+	ViewData["Title"] = "student_grades";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Liste des notes </h2>
+<hr />
+
+
+<p></p>
+
+<div class="card">
+	<div class="card-header text-white bg-primary">
+		<div class="row">
+			<div class="col">
+				<p> <b> Nom et prénom : </b> @ViewBag.Student.FirstName @ViewBag.Student.LastName </p>
+				<p> <b> Cin : </b> @ViewBag.Student.Cin</p>
+			</div>
+			<div class="col">
+				<p> <b> Filiere: </b> @ViewBag.Student.Filiere</p>
+				<p> <b> Niveau : </b> @ViewBag.Student.Level </p>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="card-body">
+
+		<table class="table" style="font-size: medium;">
+			<thead style="background-color:gainsboro">
+
+				<tr>
+					<th scope="col">Id Matiere</th>
+					<th scope="col">Matiere</th>
+					<th scope="col">Coefficient</th>
+					<th scope="col">Note</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					foreach (var grade in Model)
+					{
+						<tr>
+							<td>@grade.Subject?.SubjectId</td>
+							<td>@grade.Subject?.SubjectName </td>
+							<td>@grade.Subject?.Coefficient</td>
+							<td>@grade.Mark</td>
+
+
+
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="card-footer">
+		<a class="btn btn-outline-danger " style="margin-left:1100px;" href="/student/average/@ViewBag.Student.StudentId">
+			Calculer la moyenne 
+		</a>
+
+   </div>
+</div>
+
+

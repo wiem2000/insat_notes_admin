@@ -1,0 +1,128 @@
+﻿@model IEnumerable<app_grades.Models.Grade>
+@{
+	ViewData["Title"] = "gradesByFiliereLevelSubject";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Liste des notes </h2>
+<hr />
+<div class="row">
+	<div class="col"></div>
+	<div class="col-md-3">
+		<a class="btn btn-outline-danger btn-lg" asp-controller="Grade" asp-action="AddOrEdit"> <i class="fa-solid fa-plus"></i> Ajouter une note</a>
+	</div>
+
+</div>
+<br />
+<div>
+	<form method="get" asp-action="Find">
+
+
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+			<!-- <input type="search" class="form-control " placeholder=" Saisir la filiere ..." value="@ViewData["searchFiliere"]" name="filiere" style="width:250px" /> -->	
+
+				<select asp-items="ViewBag.filieres" value="@ViewData["searchFiliere"]" class="form-control" name="filiere" style="width:250px">
+					<option value="none">Chercher par filière ...</option>
+
+				</select>
+			</div>
+			<div class="input-group-prepend">
+			   <!--	<input type="search" class="form-control" placeholder=" Saisir le niveau ..." value="@ViewData["searchLevel"]" name="level" style="width:250px" /> -->
+			    <select asp-items="ViewBag.levels" value="@ViewData["searchLevel"]" class="form-control" name="level" style="width:250px">
+					<option value="none">Chercher par niveau...</option>
+				</select>
+			
+			</div>
+			<div class="input-group-prepend">
+
+			<!--	<input type="search" class="form-control" placeholder=" Saisir la matiere ..." value="@ViewData["searchSubject"]" name="subjectId" style="width:250px" />  -->
+			 		<select asp-items="ViewBag.subjects" value="@ViewData["searchSubject"]" class="form-control" name="subjectId" style="width:250px"> 
+					<option value="none">Choisir la matière...</option>
+				</select>
+			
+			
+			</div>
+			<button type="submit" class="btn btn-outline-primary waves-effect btn-lg"> <i class="fa-solid fa-magnifying-glass"></i> Chercher</button>
+		</div>
+
+	</form>
+
+
+
+
+</div>
+
+<p></p>
+
+@{
+	if (ViewBag.ERROR != "")
+	{
+
+
+		<div class="alert alert-warning alert-dismissable mt-5" role="alert">
+			<strong>@ViewBag.ERROR</strong>
+
+		</div>
+
+
+	}
+	else
+	{
+		<div class="card">
+			<div class="card-header text-white bg-primary">
+				<div class="row">
+
+					<div class="col">
+						<p> <b> Filiere: </b> @ViewBag.filiere</p>
+						<p> <b> Niveau : </b> @ViewBag.level </p>
+
+					</div>
+					<div class="col">
+						<p> <b> Matière : </b> @ViewBag.Subject.SubjectName</p>
+						<p> <b> Coefficient : </b> @ViewBag.Subject.Coefficient</p>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="card-body">
+
+				<table class="table" style="font-size: medium;">
+					<thead style="background-color:gainsboro">
+
+						<tr>
+							<th scope="col">Cin</th>
+							<th scope="col">Nom et prénom</th>
+							<th scope="col">Note</th>
+							<th scope="col"> Actions </th>
+						</tr>
+					</thead>
+					<tbody>
+						@{
+							foreach (var grade in Model)
+							{
+								<tr>
+									<td>@grade.Student?.Cin</td>
+									<td>@grade.Student?.LastName @grade.Student?.FirstName </td>
+									<td>@grade.Mark</td>
+									<td>
+										<a class="btn btn-outline-warning " href="/student/grades/@grade.Student?.StudentId"><i class="bi bi-eye-fill fa-xl"></i> Consulter les notes </a>
+										<a class="btn text-white" style="background-color: #D2B48C" asp-action="AddOrEdit" asp-route-id="@grade.GradeId"> <i class="fa-solid fa-pen-to-square"></i> Modifier</a>
+										<a class="btn btn-danger" href="/Grade/Delete/@grade.GradeId" onclick="return confirm('Etes vous sure de vouloir supprimer cette note ?')"> <i class="fa-solid fa-trash"></i> Supprimer</a>
+
+									</td>
+
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+}
+
+

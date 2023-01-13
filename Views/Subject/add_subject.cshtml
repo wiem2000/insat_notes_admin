@@ -1,0 +1,88 @@
+﻿@model Subject
+@{
+	ViewData["Title"] = "add_subject";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text">
+	<div class="col-md-8 offset-2">
+
+		<div class="card">
+
+
+			<div class="card-header text-white bg-primary" style="display:flex;justify-content:space-between;">
+				<p class="card-text">
+					<h5 class="card-title">
+						Ajouter un nouvelle matière
+					</h5>
+				</p>
+
+			</div>
+			<br />
+
+
+			@{
+				if (ViewBag.ERROR != "")
+				{
+
+					<div class="container">
+						<div class="alert alert-danger alert-dismissable mt-5" role="alert">
+							<strong>@ViewBag.ERROR</strong>
+
+						</div>
+					</div>
+
+
+				}
+			}
+
+
+			<div class="row">
+				<div class="col-md-8 offset-2">
+					<form asp-action="AddOrEdit">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<input type="hidden" asp-for="SubjectId" />
+
+
+						<div class="form-group mb-3">
+							<label asp-for="SubjectName" class="control-label" style="font-weight:bold"></label>
+							<input asp-for="SubjectName" class="form-control" />
+							<span asp-validation-for="SubjectName" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-3">
+							<label asp-for="Coefficient" class="control-label " style="font-weight:bold"></label>
+							<input asp-for="Coefficient" class="form-control" />
+							<span asp-validation-for="Coefficient" class="text-danger"></span>
+						</div>
+						<br>
+
+						<div class="form-group row mb-3">
+							<div class="col"></div>
+							<div class="col-md-2">
+								<input type="submit" value="Valider" class="btn btn-danger btn-lg float-right" />
+
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="card-footer">
+			<p class="card-text">
+				<a class="btn btn-outline-primary float-center btn-lg" asp-action="all">
+					Retour à la liste des matières
+				</a>
+			</p>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts{
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	}

@@ -1,0 +1,98 @@
+﻿@model Grade
+@{
+	ViewData["Title"] = "add_grade";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text">
+	<div class="col-md-8 offset-2">
+
+		<div class="card">
+
+
+			<div class="card-header text-white bg-primary" style="display:flex;justify-content:space-between;">
+				<p class="card-text">
+					<h5 class="card-title">
+						Ajouter une note
+					</h5>
+				</p>
+
+			</div>
+			<br />
+
+			@{
+				if (ViewBag.ERROR != "")
+				{
+
+					<div class="container">
+						<div class="alert alert-danger alert-dismissable mt-5" role="alert">
+							<strong>@ViewBag.ERROR</strong>
+
+						</div>
+					</div>
+
+
+				}
+			}
+
+
+
+			<div class="row">
+				<div class="col-md-8 offset-2">
+					<form asp-action="AddOrEdit">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<input type="hidden" asp-for="GradeId" />
+
+
+						<div class="form-group mb-3">
+							<label asp-for="StudentId" class="control-label"></label>
+
+							<select asp-for="StudentId" asp-items="ViewBag.students" class="form-control"></select>
+							<span asp-validation-for="StudentId" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-3">
+							<label asp-for="SubjectId" class="control-label"></label>
+							<select asp-for="SubjectId" asp-items="ViewBag.subjects" class="form-control"></select>
+							<span asp-validation-for="SubjectId" class="text-danger"></span>
+						</div>
+						<div class="form-group mb-3">
+							<label asp-for="Mark" class="control-label"></label>
+							<input asp-for="Mark" class="form-control" />
+							<span asp-validation-for="Mark" class="text-danger"></span>
+						</div>
+
+						<br>
+						<br>
+
+						<div class="form-group row mb-3">
+							<div class="col"></div>
+							<div class="col-md-2">
+								<input type="submit" value="Valider" class="btn btn-danger btn-lg float-right" />
+
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="card-footer">
+				<p class="card-text">
+					<a class="btn btn-outline-primary float-right btn-lg" asp-action="Find">
+						Retour à la liste des notes
+					</a>
+
+				</p>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+@section Scripts{
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	}
+

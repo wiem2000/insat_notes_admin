@@ -1,0 +1,86 @@
+﻿@model IEnumerable<app_grades.Models.Subject>
+@{
+	ViewData["Title"] = "subjects";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> Liste des matières </h2>
+<hr />
+<div class="row">
+	<div class="col"></div>
+	<div class="col-md-3">
+		<a class="btn btn-outline-danger btn-lg" asp-controller="Subject" asp-action="AddOrEdit"> <i class="fa-solid fa-plus"></i> Ajouter matière </a>
+	</div>
+
+</div>
+
+
+<p></p>
+<div>
+	<form method="get" asp-action="Filter">
+
+
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+
+
+				<!-- <input type="search" class="form-control" placeholder=" Chercher par filiere ..." value="@ViewData["searchFiliere"]" name="filiere" style="width:300px"/>  -->
+
+				<select asp-items="ViewBag.filieres" value="@ViewData["searchFiliere"]" class="form-control" name="filiere" style="width:300px">
+					<option value="none">Chercher par filière ...</option>
+
+				</select>
+
+			</div>
+			<div class="input-group-prepend">
+				<!--  <input type="search" class="form-control" placeholder=" Chercher par niveau ..." value="@ViewData["searchLevel"]" name="level" style="width:300px"/>  -->
+				<select asp-items="ViewBag.levels" value="@ViewData["searchLevel"]" class="form-control" name="level" style="width:300px">
+					<option value="none">Chercher par niveau...</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-outline-primary waves-effect"> <i class="fa-solid fa-magnifying-glass"></i> Chercher</button>
+		</div>
+
+	</form>
+
+
+
+
+</div>
+
+<br />
+<div class="card">
+	<table class="table" style="font-size: medium;">
+		<thead class=" card-header text-white bg-primary">
+
+			<tr>
+				<th scope="col">Id Matiere</th>
+				<th scope="col">Matiere</th>
+				<th scope="col">Coefficient</th>
+				<th scope="col"> Actions </th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.SubjectId</td>
+						<td>@item.SubjectName</td>
+						<td>@item.Coefficient</td>
+						<td>
+							<a asp-action="AddOrEdit" asp-route-id="@item.SubjectId" class="btn text-white " style="background-color: #D2B48C"> <i class="fa-solid fa-pen-to-square fa-xl"></i> Modifier</a>
+							<a class="btn btn-danger" href="/Subject/Delete/@item.SubjectId" onclick="return confirm('Etes vous sure de vouloir supprimer cette matière ?')"> <i class="fa-solid fa-trash fa-xl"></i> Supprimer</a>
+
+						</td>
+
+
+
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
